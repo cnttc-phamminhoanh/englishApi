@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const logger = require('morgan');
+const bodyParser = require('body-parser');
 const mongoClient = require('mongoose');
 
 const userRoute = require('./routes/user');
@@ -14,6 +15,8 @@ mongoClient.connect(process.env.MONGO_URL).then(() => {
 const app = express();
 
 app.use(logger('dev'));
+
+app.use(bodyParser.json());
 
 app.get('/', (req, res, next) => {
     return res.status(200).json({

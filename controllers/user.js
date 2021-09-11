@@ -1,13 +1,27 @@
 const User = require('../models/User');
 
-const index = (req, res, next) => {
-    User.find({}).then((users) => {
-        return res.status(200).json({
-            message: users
-        });
-    });
+const index = async (req, res, next) => {
+    
+    const users = await User.find({});
+    
+    return res.status(200).json({users: users});
+}
+
+const newUser = async (req, res, next) => {
+
+    const newUser = new User(req.body);
+
+    await newUser.save();
+
+    return res.status(201).json({user: newUser});
+}
+
+const getUser = async (req, res, next) => {
+
 }
 
 module.exports = {
-    index
+    index,
+    newUser,
+    getUser
 }
